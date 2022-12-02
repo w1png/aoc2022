@@ -87,7 +87,7 @@ fn part2(input: &String) {
         let char2 = chars.clone().nth(2).unwrap();
         score += calculate_score_p2(char1, char2);
     }
-    println!("Part 1: {}", score);
+    println!("Part 2: {}", score);
 }
 
 fn main() {
