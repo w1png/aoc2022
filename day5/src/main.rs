@@ -25,7 +25,6 @@ fn part1(input: &String) {
                 }
             } else if columns.len() <= current_col {
                 columns.push(vec![]);
-                
             }
 
             j += 4;
