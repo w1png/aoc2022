@@ -72,11 +72,14 @@ fn part2(input: &String) {
                 bottom.push(trees[k][j] as u32);
             }
 
-            let right = &trees[i][0..j];
-            let left = &trees[i][j+1..];
+            let mut right = trees.clone()[i][0..j].to_owned().to_vec();
+            let left = trees.to_vec()[i][j+1..].to_owned().to_vec();
+
+            right.reverse();
+            top.reverse();
 
             fn process_score(values: Vec<u32>, curr: u32) -> u32 {
-                let mut score = 1;
+                let mut score = 0;
                 for val in values.iter() {
                     score += 1;
                     if val >= &curr {
@@ -85,20 +88,16 @@ fn part2(input: &String) {
                 }
                 score
             }
-            //
-            // let current_score = process_score(top, *tree) 
-            //     * process_score(bottom, *tree) 
-            //     * process_score(left.to_vec(), *tree)
-            //     * process_score(right.to_vec(), *tree);
-            
-            let top_score
-            
 
-            println!("tree: {} {:?}", tree, current_score);
-            
+            let top_score = process_score(top, *tree);
+            let bottom_score = process_score(bottom, *tree);
+            let left_score = process_score(left, *tree);
+            let right_score = process_score(right, *tree);
 
-            // println!("{:?}", max_score);
-            // println!("{}", scenic_score);
+            let current_score = top_score * bottom_score * left_score * right_score;
+            if current_score > max_score {
+                max_score = current_score;
+            }
         }
     }
 
@@ -106,8 +105,9 @@ fn part2(input: &String) {
 }
 fn main() {
     let mut input = String::new();
-    File::open("test_input").unwrap().read_to_string(&mut input).unwrap();
+    File::open("input").unwrap().read_to_string(&mut input).unwrap();
 
     part1(&input);
     part2(&input);
 }
+
